@@ -20,6 +20,14 @@ Not yet published :(
 
 ## Usage
 
+```bash
+godotisan create project-name
+cd project-name
+godotisan module add admob
+godotisan module install admob
+godotisan build android --cores=8
+```
+
 ### Create
 
 Create the project and clone the Godot repo on it, checkout the latest stable tag.
@@ -82,3 +90,14 @@ Remove the module from Godot modules folder
 ```bash
 godotisan module uninstall admob
 ```
+
+## Modules list
+
+- **admob** https://github.com/jlopezcur/GodotAdmob.git (tag: v1.0)
+- **google-analytics** https://github.com/jlopezcur/GodotGoogleAnalytics.git (tag: master)
+- **google-play-services** https://github.com/jlopezcur/GodotGooglePlayGameServices.git (tag:master)
+- **share** https://github.com/jlopezcur/GodotShare.git (tag: master)
+
+## License
+
+MIT
