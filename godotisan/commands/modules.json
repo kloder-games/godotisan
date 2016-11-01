@@ -1,0 +1,28 @@
+{
+    "modules": [
+        {
+            "name": "admob",
+            "repo": "git@github.com:jlopezcur/GodotAdmob.git",
+            "tag": "v1.0",
+            "dir": "admob"
+        },
+        {
+            "name": "google-analytics",
+            "repo": "git@github.com:jlopezcur/GodotGoogleAnalytics.git",
+            "tag": "master",
+            "dir": "analytics"
+        },
+        {
+            "name": "google-play-services",
+            "repo": "git@github.com:jlopezcur/GodotGooglePlayGameServices.git",
+            "tag": "master",
+            "dir": "gpgs"
+        },
+        {
+            "name": "share",
+            "repo": "git@github.com:jlopezcur/GodotShare.git",
+            "tag": "master",
+            "dir": "share"
+        }
+    ]
+}
