@@ -1,6 +1,6 @@
 """The base command."""
 
-import os, json
+import os, json, shutil, errno
 import subprocess
 
 class Base(object):
@@ -40,3 +40,13 @@ class Base(object):
         scriptDir = os.path.dirname(os.path.realpath(__file__))
         with open(os.path.join(scriptDir, 'modules.json')) as outfile:
             return json.load(outfile)
+
+    # Copying anything
+
+    def copyanything(self, src, dst):
+        try:
+            shutil.copytree(src, dst)
+        except OSError as exc: # python >2.5
+            if exc.errno == errno.ENOTDIR:
+                shutil.copy(src, dst)
+            else: raise

@@ -19,6 +19,10 @@ class Build(Base):
             print 'Godot build successfuly!'
 
         elif self.options['android']:
+
+            config = self.readConfigFile()
+            if config['firebase']: self.firebaseCopy()
+
             if self.options['--only-debug']:
                 self.compileAndroidTemplateDebug()
             elif self.options['--only-release']:
@@ -51,6 +55,11 @@ class Build(Base):
         os.chdir(self.godotJavaDir)
         subprocess.call("./gradlew build", shell=True, stdout=self.stdout, close_fds=True, stderr=subprocess.STDOUT)
 
+    def firebaseCopy(self):
+        print 'Copying file android-service.json to project... ',
+        firebaseFile = os.path.join(self.currentDir, 'google-services.json')
+        self.copyanything(firebaseFile, self.godotJavaDir)
+        print 'OK'
 
     # Clean the builds with scons
 

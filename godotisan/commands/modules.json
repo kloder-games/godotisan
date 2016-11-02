@@ -3,7 +3,7 @@
         {
             "name": "admob",
             "repo": "git@github.com:jlopezcur/GodotAdmob.git",
-            "tag": "v1.0",
+            "tag": "v1.1",
             "dir": "admob"
         },
         {
@@ -13,10 +13,22 @@
             "dir": "analytics"
         },
         {
+            "name": "adcolony",
+            "repo": "git@github.com:jlopezcur/GodotAdColony.git",
+            "tag": "master",
+            "dir": "adcolony"
+        },
+        {
             "name": "google-play-services",
             "repo": "git@github.com:jlopezcur/GodotGooglePlayGameServices.git",
             "tag": "master",
-            "dir": "gpgs"
+            "dir": "gpgs",
+            "after_install": [
+                {
+                    "file": "android/AndroidManifestChunk.xml",
+                    "replace": ["[your-game-services-id]", "your-game-services-id"]
+                }
+            ]
         },
         {
             "name": "share",

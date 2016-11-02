@@ -31,7 +31,7 @@ class Create(Base):
         os.makedirs(os.path.join(self.name, 'modules'))
 
     def createConfigFile(self):
-        config = '{ "tag": "2.1-stable", "modules": [] }'
+        config = '{ "tag": "2.1-stable", "firebase": false, "modules": [] }'
 
         self.configFile = os.path.join(self.name, 'godotisan.json')
         with open(self.configFile, 'w') as outfile:

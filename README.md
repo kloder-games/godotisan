@@ -91,13 +91,26 @@ Remove the module from Godot modules folder
 godotisan module uninstall admob
 ```
 
+## Firebase
+
+If you are using firebase you must turn firebase to *true* (on godotisan.json) and put your *google-services.json* on the root of the build project
+
+```bash
+{
+    ...
+    "firebase": true
+    ...
+}
+```
+
 ## Modules list
 
-- **admob** https://github.com/jlopezcur/GodotAdmob.git (tag: v1.0)
+- **admob** https://github.com/jlopezcur/GodotAdmob.git (tag: v1.1)
+- **adcolony** https://github.com/jlopezcur/GodotAdColony.git (tag: master)
 - **google-analytics** https://github.com/jlopezcur/GodotGoogleAnalytics.git (tag: master)
 - **google-play-services** https://github.com/jlopezcur/GodotGooglePlayGameServices.git (tag:master)
 - **share** https://github.com/jlopezcur/GodotShare.git (tag: master)
 
 ## License
 
-MIT
+MIT license

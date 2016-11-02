@@ -96,14 +96,6 @@ class Module(Base):
 
     # Utilities
 
-    def copyanything(self, src, dst):
-        try:
-            shutil.copytree(src, dst)
-        except OSError as exc: # python >2.5
-            if exc.errno == errno.ENOTDIR:
-                shutil.copy(src, dst)
-            else: raise
-
     def getModuleFromConfig(self):
         for module in self.config['modules']:
             if module['name'] == self.name:
