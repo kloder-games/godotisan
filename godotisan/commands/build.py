@@ -2,70 +2,54 @@
 
 import os, subprocess
 
+from utils.scons import Scons
+from utils.gradle import Gradle
+import utils.files as Files
 from .base import Base
 
 class Build(Base):
     """Build the Godot project"""
 
-    cores = 0
-    stdout = None
+    scons = None
+    gradle = None
+    godotJavaDir = ""
 
     def run(self):
-        if self.options['--cores']: self.cores = int(self.options['--cores'])
-        if not self.options['--debug']: self.stdout = self.DEVNULL
+        cores = 0
+        stdout = None
+        self.godotJavaDir = os.path.join(self.godotDir, 'platform/android/java')
+
+        if self.options['--cores']: cores = int(self.options['--cores'])
+        if not self.options['--debug']: stdout = self.DEVNULL
+
+        scons = Scons(self.godotDir, cores, stdout)
+        gradle = Gradle(self.godotJavaDir, stdout)
 
         if self.options['godot']:
-            self.compileGodot(cores)
+            scons.buildGodot()
             print 'Godot build successfuly!'
 
         elif self.options['android']:
-
             config = self.readConfigFile()
             if config['firebase']: self.firebaseCopy()
 
+            gradle.clean()
             if self.options['--only-debug']:
-                self.compileAndroidTemplateDebug()
+                scons.buildAndroidDebug()
+                print 'Template build successfuly!'
             elif self.options['--only-release']:
-                self.compileAndroidTemplateRelease()
+                scons.buildAndroidRelease()
+                print 'Template build successfuly!'
             else:
-                self.compileAndroidTemplateRelease()
-                self.compileAndroidTemplateDebug()
-            print 'Templates build successfuly!'
-
-    def compileGodot(self):
-        print 'Compiling Godot with %d cores...' % self.cores
-        os.chdir(self.godotDir)
-        subprocess.call('scons -j%d platform=x11' % self.cores, shell=True, stdout=self.stdout, close_fds=True, stderr=subprocess.STDOUT)
-
-    def compileAndroidTemplateRelease(self):
-        self.cleanBuild()
-        print 'Compiling android template release with %d cores...' % self.cores
-        os.chdir(self.godotDir)
-        subprocess.call('scons -j%d platform=android target=release' % self.cores, shell=True, stdout=self.stdout, close_fds=True, stderr=subprocess.STDOUT)
-        print 'Gradle android template release ...'
-        os.chdir(self.godotJavaDir)
-        subprocess.call("./gradlew build", shell=True, stdout=self.stdout, close_fds=True, stderr=subprocess.STDOUT)
-
-    def compileAndroidTemplateDebug(self):
-        self.cleanBuild()
-        print 'Compiling android template debug with %d cores...' % self.cores
-        os.chdir(self.godotDir)
-        subprocess.call('scons -j%d platform=android target=release_debug' % self.cores, shell=True, stdout=self.stdout, close_fds=True, stderr=subprocess.STDOUT)
-        print 'Gradle android template debug ...'
-        os.chdir(self.godotJavaDir)
-        subprocess.call("./gradlew build", shell=True, stdout=self.stdout, close_fds=True, stderr=subprocess.STDOUT)
+                scons.buildAndroidRelease()
+                gradle.build()
+                gradle.clean()
+                scons.buildAndroidDebug()
+                print 'Templates build successfuly!'
+            gradle.build()
 
     def firebaseCopy(self):
         print 'Copying file android-service.json to project... ',
         firebaseFile = os.path.join(self.currentDir, 'google-services.json')
-        self.copyanything(firebaseFile, self.godotJavaDir)
+        Files.copyanything(firebaseFile, self.godotJavaDir)
         print 'OK'
-
-    # Clean the builds with scons
-
-    def cleanBuild(self):
-        print 'Cleaning before compile...'
-        # os.chdir(self.godotDir)
-        # subprocess.call('scons -c platform=android', shell=True, stdout=self.DEVNULL, close_fds=True, stderr=subprocess.STDOUT)
-        os.chdir(self.godotJavaDir)
-        subprocess.call("./gradlew clean", shell=True, stdout=self.stdout, close_fds=True, stderr=subprocess.STDOUT)
