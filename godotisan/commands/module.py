@@ -3,6 +3,7 @@
 import os, json, shutil, errno
 from subprocess import call
 from git import Repo, Git
+import utils.files as Files
 
 from .base import Base
 
@@ -65,8 +66,37 @@ class Module(Base):
             print 'Module already installed!'
         else:
             print 'Installing module %s...' % self.name
-            self.copyanything(os.path.join(self.moduleDir, self.moduleFromConfig['dir']),
+            Files.copyanything(os.path.join(self.moduleDir, self.moduleFromConfig['dir']),
                         os.path.join(self.godotModulesDir, self.moduleFromConfig['dir']))
+
+            # Before compile actions
+            if 'after_install' in self.moduleFromConfig:
+                # After Install
+                for action in self.moduleFromConfig['after_install']:
+                    if 'replace' in action:
+                        # Replace
+                        file_path = os.path.join(self.godotDir, action['file'])
+                        Files.replace(file_path, action['replace'][0],
+                                        action['replace'][1])
+                    elif 'add-line-after' in action:
+                        # Add Line After
+                        file_path = os.path.join(self.godotDir, action['file'])
+                        Files.replace(file_path, action['add-line-after'][0],
+                            action['add-line-after'][0] + '\n' + action['add-line-after'][1])
+                    elif 'add-line-at-end' in action:
+                        # Add Line At End
+                        file_path = os.path.join(self.godotDir, action['file'])
+                        Files.addatend(file_path, action['add-line-at-end'])
+            if 'after-install-firebase' in self.moduleFromConfig:
+                # After install if has firebase
+                config = self.readConfigFile()
+                if config['firebase']:
+                    if 'replace-by-file' in action:
+                        # Replace by File
+                        file_path = os.path.join(self.godotDir, action['file'])
+                        subst = os.path.join(self.godotDir, action['replace-by-file'])
+                        Files.replacefile(file_path, subst)
+
             print 'Module %s installed successfully!' % self.name
 
     def uninstall(self):

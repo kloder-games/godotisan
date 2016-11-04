@@ -1,10 +1,39 @@
 {
     "modules": [
         {
+            "name": "firebase",
+            "repo": "git@github.com:jlopezcur/GodotFirebase.git",
+            "tag": "master",
+            "dir": "firebase",
+            "after-install": [
+                {
+                    "file": "platform/android/java/build.gradle.template",
+                    "add-line-after": [
+                        "classpath 'com.android.tools.build:gradle:2.1.0'",
+                        "classpath 'com.google.gms:google-services:3.0.0'"
+                    ]
+                },
+                {
+                    "file": "platform/android/java/build.gradle.template",
+                    "add-line-at-end": "apply plugin: 'com.google.gms.google-services'"
+                },
+                {
+                    "file": "modules/firebase/config.py",
+                    "replace": ["[your-game-package]", "your-game-package"]
+                }
+            ]
+        },
+        {
             "name": "admob",
             "repo": "git@github.com:jlopezcur/GodotAdmob.git",
             "tag": "v1.1",
-            "dir": "admob"
+            "dir": "admob",
+            "after-install-firebase": [
+                {
+                    "file": "modules/firebase/config.py",
+                    "replace-by-file": "modules/firebase/config-firebase.py"
+                }
+            ]
         },
         {
             "name": "google-analytics",
@@ -23,9 +52,9 @@
             "repo": "git@github.com:jlopezcur/GodotGooglePlayGameServices.git",
             "tag": "master",
             "dir": "gpgs",
-            "after_install": [
+            "after-install": [
                 {
-                    "file": "android/AndroidManifestChunk.xml",
+                    "file": "modules/gpgs/android/AndroidManifestChunk.xml",
                     "replace": ["[your-game-services-id]", "your-game-services-id"]
                 }
             ]
