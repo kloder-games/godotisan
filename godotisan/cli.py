@@ -9,9 +9,10 @@ Usage:
   godotisan create <name>
   godotisan build godot [--cores=<nc>] [--debug]
   godotisan build android [--cores=<nc>] [--only-debug | --only-release] [--debug]
-  godotisan module install <name>
-  godotisan module uninstall <name>
   godotisan module add <name>
+  godotisan module install <name>
+  godotisan module reinstall <name>
+  godotisan module uninstall <name>
   godotisan module remove <name>
   godotisan -h | --help
   godotisan --version
@@ -49,6 +50,6 @@ def main():
         if hasattr(commands, k) and v:
             module = getattr(commands, k)
             commands = getmembers(module, isclass)
-            command = [command[1] for command in commands if command[0] != 'Base' and command[0] != 'Git'][0]
+            command = [command[1] for command in commands if command[0] != 'Base' and command[0] != 'Git' and command[0] != 'Actions'][0]
             command = command(options)
             command.run()

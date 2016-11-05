@@ -1,0 +1,20 @@
+{
+    "tag": "2.1-stable",
+    "firebase": false,
+    "modules": [],
+    "before-build": [
+        {
+            "file": "platform/android/build.gradle.template",
+            "replace": [
+                "minSdkVersion 14",
+                "minSdkVersion 9"
+            ]
+        }
+    ],
+    "before-build-firebase": [
+        {
+            "file": "platform/android/java/",
+            "copy-file": "google-services.json"
+        }
+    ]
+}

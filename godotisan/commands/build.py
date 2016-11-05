@@ -1,55 +1,56 @@
 """The build command."""
 
-import os, subprocess
+import os
 
 from utils.scons import Scons
 from utils.gradle import Gradle
+from utils.actions import Actions
+
 import utils.files as Files
+
 from .base import Base
 
 class Build(Base):
     """Build the Godot project"""
 
-    scons = None
-    gradle = None
-    godotJavaDir = ""
+    DEVNULL = open(os.devnull, 'wb')
 
     def run(self):
         cores = 0
         stdout = None
-        self.godotJavaDir = os.path.join(self.godotDir, 'platform/android/java')
 
         if self.options['--cores']: cores = int(self.options['--cores'])
         if not self.options['--debug']: stdout = self.DEVNULL
 
-        scons = Scons(self.godotDir, cores, stdout)
-        gradle = Gradle(self.godotJavaDir, stdout)
+        actions = Actions()
+        scons = Scons(cores, stdout)
+        gradle = Gradle(stdout)
 
         if self.options['godot']:
             scons.buildGodot()
             print 'Godot build successfuly!'
 
         elif self.options['android']:
-            config = self.readConfigFile()
-            if config['firebase']: self.firebaseCopy()
+            print 'Processing before build rules... ',
+            if self.config.getActions('before-build') != None: actions.doActions(self.config.getActions('before-build'))
+            if self.config.isFirebase() and self.config.getActions('before-build-firebase') != None: actions.doActions(self.config.getActions('before-build-firebase'))
+            print 'OK'
 
+            print 'Cleaning builds... ',
             gradle.clean()
+            print 'OK'
+
             if self.options['--only-debug']:
+                print 'Building debug template... ',
                 scons.buildAndroidDebug()
-                print 'Template build successfuly!'
             elif self.options['--only-release']:
+                print 'Building release template... ',
                 scons.buildAndroidRelease()
-                print 'Template build successfuly!'
             else:
+                print 'Building release & debug template... ',
                 scons.buildAndroidRelease()
                 gradle.build()
                 gradle.clean()
                 scons.buildAndroidDebug()
-                print 'Templates build successfuly!'
             gradle.build()
-
-    def firebaseCopy(self):
-        print 'Copying file android-service.json to project... ',
-        firebaseFile = os.path.join(self.currentDir, 'google-services.json')
-        Files.copyanything(firebaseFile, self.godotJavaDir)
-        print 'OK'
+            print 'OK'

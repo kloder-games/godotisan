@@ -7,19 +7,22 @@
             "dir": "firebase",
             "after-install": [
                 {
-                    "file": "platform/android/java/build.gradle.template",
+                    "file": "platform/android/build.gradle.template",
                     "add-line-after": [
                         "classpath 'com.android.tools.build:gradle:2.1.0'",
                         "classpath 'com.google.gms:google-services:3.0.0'"
                     ]
                 },
                 {
-                    "file": "platform/android/java/build.gradle.template",
+                    "file": "platform/android/build.gradle.template",
                     "add-line-at-end": "apply plugin: 'com.google.gms.google-services'"
                 },
                 {
                     "file": "modules/firebase/config.py",
-                    "replace": ["[your-game-package]", "your-game-package"]
+                    "replace": [
+                        "[your-game-package]",
+                        "your-game-package"
+                    ]
                 }
             ]
         },
@@ -30,8 +33,8 @@
             "dir": "admob",
             "after-install-firebase": [
                 {
-                    "file": "modules/firebase/config.py",
-                    "replace-by-file": "modules/firebase/config-firebase.py"
+                    "file": "modules/admob/config.py",
+                    "replace-by-file": "modules/admob/config-firebase.py"
                 }
             ]
         },
@@ -55,7 +58,10 @@
             "after-install": [
                 {
                     "file": "modules/gpgs/android/AndroidManifestChunk.xml",
-                    "replace": ["[your-game-services-id]", "your-game-services-id"]
+                    "replace": [
+                        "[your-game-services-id]",
+                        "your-game-services-id"
+                    ]
                 }
             ]
         },

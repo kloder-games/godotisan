@@ -1,139 +1,83 @@
 """The module command."""
 
-import os, json, shutil, errno
-from subprocess import call
-from git import Repo, Git
+import os
 import utils.files as Files
-
+from utils.actions import Actions
 from .base import Base
 
 class Module(Base):
-    """Manage modules"""
-
-    config = []
-    modules = []
-    name = ""
-    moduleDir = ""
-    moduleFromModules = {}
-    moduleFromConfig = {}
 
     def run(self):
-
-        self.modules = self.readModulesFile()
-        self.config = self.readConfigFile()
+        self.actions = Actions()
         self.name = self.options["<name>"]
+        modulesDir = os.path.join(os.getcwd(), 'modules')
 
-        self.moduleFromModules = self.getModuleFromModules()
-        self.moduleFromConfig = self.getModuleFromConfig()
-        self.moduleDir = os.path.join(self.modulesDir, self.name)
+        if self.name == 'all':
+            if self.options["add"]: print 'Not allowed all option for add action :('; exit()
+            else:
+                for module in self.config.getModules():
 
-        if self.options["add"]:
-            self.add()
-        elif self.options["install"]:
-            self.install()
-        elif self.options["uninstall"]:
-            self.uninstall()
-        elif self.options["remove"]:
-            self.remove()
-
-    def add(self):
-        if self.moduleFromModules == None:
-            print 'Module not found :('
-        elif self.moduleFromConfig != None:
-            print 'Module already added!'
-        elif os.path.exists(self.moduleDir):
-            self.config['modules'].append(self.module)
-            self.saveConfigFile(self.config)
-            print 'Module already added! (fixed godotisan.json)'
+                    self.moduleDir = os.path.join(modulesDir, module['name'])
+                    self.action(module)
         else:
-            print 'Clonning %s repo...' % self.name
-            Repo.clone_from(self.moduleFromModules['repo'], self.moduleDir)
-            repo = Git(self.moduleDir)
-            if 'tag' in self.moduleFromModules and self.moduleFromModules['tag'] != 'master':
-                print 'Checkout to "%s" Tag...' % self.moduleFromModules['tag']
-                repo.checkout(self.moduleFromModules['tag'])
+            module = self.library.getModule(self.name)
+            self.moduleDir = os.path.join(modulesDir, module['name'])
+            if not self.options["add"]:
+                module = self.config.getModule(self.name)
+                self.moduleDir = os.path.join(modulesDir, module['name'])
+            self.action(module)
 
-            self.config['modules'].append(self.moduleFromModules)
-            self.saveConfigFile(self.config)
-            print 'Module %s installed successfuly!' % self.name
 
-    def install(self):
-        if self.moduleFromConfig == None:
-            print 'Module not found :('
-        elif not os.path.exists(self.moduleDir):
-            print 'Module not added :('
-        elif os.path.exists(os.path.join(self.godotModulesDir, self.moduleFromConfig['dir'])):
-            print 'Module already installed!'
+    def action(self, module):
+        if self.options["add"]: self.add(module)
+        elif self.options["install"]: self.install(module)
+        elif self.options["reinstall"]: self.reinstall(module)
+        elif self.options["uninstall"]: self.uninstall(module)
+        elif self.options["remove"]: self.remove(module)
+
+    def add(self, module):
+        if not module:
+            print 'Module %s not in library :(' % module['name']; exit()
+        print 'Adding module %s... ' % module['name'],
+        modulesDir = os.path.join(os.getcwd(), 'modules')
+        self.github.cloneModule(modulesDir, module)
+        self.config.addModule(module)
+        print 'OK'
+
+    def install(self, module):
+        godotModulesDir = os.path.join(os.getcwd(), 'godot/modules')
+        if not module:
+            print 'Module %s not added :(' % module['name']; exit()
+        elif os.path.exists(os.path.join(godotModulesDir, module['dir'])):
+            print 'Module %s already installed!' % module['name']; exit()
         else:
-            print 'Installing module %s...' % self.name
-            Files.copyanything(os.path.join(self.moduleDir, self.moduleFromConfig['dir']),
-                        os.path.join(self.godotModulesDir, self.moduleFromConfig['dir']))
+            print 'Installing module %s...' % module['name'],
+            Files.copyAnything(os.path.join(self.moduleDir, module['dir']), os.path.join(godotModulesDir, module['dir']))
+            if 'after-install' in module: self.actions.doActions(module['after-install'])
+            if 'after-install-firebase' in module and self.config.isFirebase(): self.actions.doActions(module['after-install-firebase'])
+            print 'OK'
 
-            # Before compile actions
-            if 'after_install' in self.moduleFromConfig:
-                # After Install
-                for action in self.moduleFromConfig['after_install']:
-                    if 'replace' in action:
-                        # Replace
-                        file_path = os.path.join(self.godotDir, action['file'])
-                        Files.replace(file_path, action['replace'][0],
-                                        action['replace'][1])
-                    elif 'add-line-after' in action:
-                        # Add Line After
-                        file_path = os.path.join(self.godotDir, action['file'])
-                        Files.replace(file_path, action['add-line-after'][0],
-                            action['add-line-after'][0] + '\n' + action['add-line-after'][1])
-                    elif 'add-line-at-end' in action:
-                        # Add Line At End
-                        file_path = os.path.join(self.godotDir, action['file'])
-                        Files.addatend(file_path, action['add-line-at-end'])
-            if 'after-install-firebase' in self.moduleFromConfig:
-                # After install if has firebase
-                config = self.readConfigFile()
-                if config['firebase']:
-                    if 'replace-by-file' in action:
-                        # Replace by File
-                        file_path = os.path.join(self.godotDir, action['file'])
-                        subst = os.path.join(self.godotDir, action['replace-by-file'])
-                        Files.replacefile(file_path, subst)
+    def reinstall(self, module):
+        self.uninstall(module)
+        self.install(module)
 
-            print 'Module %s installed successfully!' % self.name
-
-    def uninstall(self):
-        if self.moduleFromConfig == None:
-            print 'Module not found :('
-        elif not os.path.exists(os.path.join(self.godotModulesDir, self.moduleFromConfig['dir'])):
-            print 'Module not installed!'
+    def uninstall(self, module):
+        godotModulesDir = os.path.join(os.getcwd(), 'godot/modules')
+        if not module:
+            print 'Module %s not found in config :(' % module['name']
+        elif not os.path.exists(os.path.join(godotModulesDir, module['dir'])):
+            print 'Module %s not installed!' % module['name']
         else:
-            print 'Uninstalling module %s...' % self.name
-            installedFolder = os.path.join(self.godotModulesDir, self.moduleFromConfig['dir'])
-            shutil.rmtree(installedFolder)
-            print 'Module %s unisntalled successfully!' % self.name
+            print 'Uninstalling module %s...' % module['name'],
+            installedFolder = os.path.join(godotModulesDir, module['dir'])
+            Files.removeFolder(installedFolder)
+            print 'OK'
 
-    def remove(self):
-        if self.moduleFromConfig == None:
-            print 'Module not found :('
-        elif not os.path.exists(self.moduleDir):
-            self.config['modules'].remove(self.moduleFromConfig)
-            self.saveConfigFile(self.config)
-            print 'Module not added! (fixed godotisan.json)'
+    def remove(self, module):
+        if not module:
+            print 'Module %s not found in config :(' % module['name']
         else:
-            print 'Removing module %s...' % self.name
-            shutil.rmtree(self.moduleDir)
-            self.config['modules'].remove(self.moduleFromConfig)
-            self.saveConfigFile(self.config)
-            print 'Module %s removed successfully!' % self.name
-
-    # Utilities
-
-    def getModuleFromConfig(self):
-        for module in self.config['modules']:
-            if module['name'] == self.name:
-                return module
-        return None
-
-    def getModuleFromModules(self):
-        for module in self.modules['modules']:
-            if module['name'] == self.name:
-                return module
-        return None
+            print 'Removing module %s...' % module['name'],
+            Files.removeFolder(self.moduleDir)
+            self.config.removeModule(module)
+            print 'OK'
