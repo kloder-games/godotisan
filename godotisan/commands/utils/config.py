@@ -21,12 +21,13 @@ class Config():
 
     def readFromTemplate(self):
         file_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'godotisan-template.json')
-        with open(file_path) as f:
-            return json.loads(f)
+        with open(file_path) as data_file:
+            data = json.load(data_file)
+        return data
 
     def save(self, data):
-        with open(self.configFile, 'w', encoding='utf-8') as f:
-            f.write(json.dumps(data, indent=4))
+        with open(self.configFile, 'w') as data_file:
+            data_file.write(json.dumps(data, indent=4))
 
     def isFirebase(self):
         if 'firebase' in self.data and self.data['firebase']: return True
