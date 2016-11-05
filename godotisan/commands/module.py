@@ -20,7 +20,7 @@ class Module(Base):
                     self.moduleDir = os.path.join(modulesDir, module['name'])
                     self.action(module)
         else:
-            module = self.library.getModule(self.name)
+            module = self.library.get(self.name)
             self.moduleDir = os.path.join(modulesDir, module['name'])
             if not self.options["add"]:
                 module = self.config.getModule(self.name)
