@@ -1,7 +1,7 @@
 {
     "modules": [
         {
-            "name": "firebase",
+            "id": "firebase",
             "repo": "git@github.com:jlopezcur/GodotFirebase.git",
             "tag": "master",
             "dir": "firebase",
@@ -27,7 +27,7 @@
             ]
         },
         {
-            "name": "admob",
+            "id": "admob",
             "repo": "git@github.com:jlopezcur/GodotAdmob.git",
             "tag": "v1.2",
             "dir": "admob",
@@ -39,19 +39,19 @@
             ]
         },
         {
-            "name": "google-analytics",
+            "id": "google-analytics",
             "repo": "git@github.com:jlopezcur/GodotGoogleAnalytics.git",
             "tag": "master",
             "dir": "analytics"
         },
         {
-            "name": "adcolony",
+            "id": "adcolony",
             "repo": "git@github.com:jlopezcur/GodotAdColony.git",
             "tag": "master",
             "dir": "adcolony"
         },
         {
-            "name": "google-play-services",
+            "id": "google-play-games-services",
             "repo": "git@github.com:jlopezcur/GodotGooglePlayGameServices.git",
             "tag": "master",
             "dir": "gpgs",
@@ -66,7 +66,7 @@
             ]
         },
         {
-            "name": "share",
+            "id": "share",
             "repo": "git@github.com:jlopezcur/GodotShare.git",
             "tag": "master",
             "dir": "share"

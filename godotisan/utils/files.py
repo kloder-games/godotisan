@@ -5,19 +5,21 @@ from shutil import move, copytree, copy, rmtree, errno
 from os import remove, close
 
 def replace(file_path, pattern, subst):
+    """ Replace a pattern in a file """
     #Create temp file
-    fh, abs_path = mkstemp()
-    with open(abs_path,'w') as new_file:
+    fpo, abs_path = mkstemp()
+    with open(abs_path, 'w') as new_file:
         with open(file_path) as old_file:
             for line in old_file:
                 new_file.write(line.replace(pattern, subst))
-    close(fh)
+    close(fpo)
     #Remove original file
     remove(file_path)
     #Move new file
     move(abs_path, file_path)
 
-def copyAnything(src, dst):
+def copy_anything(src, dst):
+    """ Copy anything """
     try:
         copytree(src, dst)
     except OSError as exc: # python >2.5
@@ -25,22 +27,23 @@ def copyAnything(src, dst):
             copy(src, dst)
         else: raise
 
-def addAtEnd(file_path, string):
-    if not fileHasString(file_path, string):
-        with open(file_path, "a") as f:
-            f.write(string)
+def add_at_end(file_path, string):
+    """ Add at end of file """
+    if not file_has_string(file_path, string):
+        with open(file_path, "a") as fpo:
+            fpo.write(string)
 
-def replaceFile(file_path, subst):
-    """
-    Replace file by other
-    """
+def replace_file(file_path, subst):
+    """ Replace file by other """
     remove(file_path)
     move(subst, file_path)
 
-def removeFolder(folder):
+def remove_folder(folder):
+    """ Remove folder """
     rmtree(folder)
 
-def fileHasString(file_path, string):
+def file_has_string(file_path, string):
+    """ Check if a file has a string """
     if string in open(file_path).read():
         return True
     return False

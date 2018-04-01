@@ -7,12 +7,10 @@ godotisan.py
 Usage:
   godotisan check
   godotisan create <name>
-  godotisan build godot [--cores=<nc>] [--debug]
-  godotisan build android [--cores=<nc>] [--only-debug | --only-release] [--debug]
+  godotisan build godot [--cores=<nc>]
+  godotisan build android [--cores=<nc>] [--only-debug | --only-release]
+  godotisan module list
   godotisan module add <name>
-  godotisan module install <name>
-  godotisan module reinstall <name>
-  godotisan module uninstall <name>
   godotisan module remove <name>
   godotisan -h | --help
   godotisan --version
@@ -23,7 +21,6 @@ Options:
   --cores=<nc>                      Build with this number of cores
   --only-debug                      Build only for debug
   --only-release                    Build only for release
-  --debug                           Show debug output for each command
 
 Examples:
   godotisan create my_project
@@ -41,7 +38,7 @@ from . import __version__ as VERSION
 
 def main():
     """Main CLI entrypoint."""
-    import commands
+    import godotisan.commands as commands
     options = docopt(__doc__, version=VERSION)
 
     # Here we'll try to dynamically match the command the user is trying to run

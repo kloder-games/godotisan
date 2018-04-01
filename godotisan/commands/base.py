@@ -1,9 +1,8 @@
 """The base command."""
 
-import os, json
-from utils.config import Config
-from utils.library import Library
-from utils.github import Github
+from godotisan.libs.config import Config
+from godotisan.libs.library import Library
+from godotisan.libs.github import Github
 
 class Base(object):
     """A base command."""
@@ -17,4 +16,5 @@ class Base(object):
         self.github = Github()
 
     def run(self):
+        """ Default run behaviour """
         raise NotImplementedError('You must implement the run() method yourself!')

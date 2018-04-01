@@ -1,0 +1,119 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Actions	godotisan/commands/utils/actions.py	/^class Actions():$/;"	kind:class	line:8
+Base	godotisan/commands/base.py	/^class Base(object):$/;"	kind:class	line:8
+Build	godotisan/commands/build.py	/^class Build(Base):$/;"	kind:class	line:13
+Build	godotisan/commands/check.py	/^class Build(Base):$/;"	kind:class	line:10
+Config	godotisan/commands/utils/config.py	/^class Config():$/;"	kind:class	line:7
+Create	godotisan/commands/create.py	/^class Create(Base):$/;"	kind:class	line:6
+DEVNULL	godotisan/commands/build.py	/^    DEVNULL = open(os.devnull, 'wb')$/;"	kind:variable	line:16
+DEVNULL	godotisan/commands/utils/gradle.py	/^    DEVNULL = open(os.devnull, 'wb')$/;"	kind:variable	line:9
+DEVNULL	godotisan/commands/utils/scons.py	/^    DEVNULL = open(os.devnull, 'wb')$/;"	kind:variable	line:9
+Github	godotisan/commands/utils/github.py	/^class Github():$/;"	kind:class	line:8
+Gradle	godotisan/commands/utils/gradle.py	/^class Gradle():$/;"	kind:class	line:7
+Library	godotisan/commands/utils/library.py	/^class Library():$/;"	kind:class	line:7
+Module	godotisan/commands/module.py	/^class Module(Base):$/;"	kind:class	line:8
+RunTests	setup.py	/^class RunTests(Command):$/;"	kind:class	line:16
+Scons	godotisan/commands/utils/scons.py	/^class Scons():$/;"	kind:class	line:7
+__init__	godotisan/commands/base.py	/^    def __init__(self, options, *args, **kwargs):$/;"	kind:member	line:11
+__init__	godotisan/commands/utils/actions.py	/^    def __init__(self):$/;"	kind:member	line:10
+__init__	godotisan/commands/utils/config.py	/^    def __init__(self):$/;"	kind:member	line:11
+__init__	godotisan/commands/utils/github.py	/^    def __init__(self):$/;"	kind:member	line:10
+__init__	godotisan/commands/utils/gradle.py	/^    def __init__(self, stdout = DEVNULL):$/;"	kind:member	line:11
+__init__	godotisan/commands/utils/library.py	/^    def __init__(self):$/;"	kind:member	line:11
+__init__	godotisan/commands/utils/scons.py	/^    def __init__(self, cores = 4, stdout = DEVNULL):$/;"	kind:member	line:11
+__init__.py	godotisan/__init__.py	1;"	kind:file	line:1
+__init__.py	godotisan/commands/__init__.py	1;"	kind:file	line:1
+__init__.py	godotisan/commands/utils/__init__.py	1;"	kind:file	line:1
+__init__.py	godotisan/modules/__init__.py	1;"	kind:file	line:1
+__version__	godotisan/__init__.py	/^__version__ = '0.1.0'$/;"	kind:variable	line:1
+action	godotisan/commands/module.py	/^    def action(self, module):$/;"	kind:member	line:31
+actions.py	godotisan/commands/utils/actions.py	1;"	kind:file	line:1
+add	godotisan/commands/module.py	/^    def add(self, module):$/;"	kind:member	line:38
+addAtEnd	godotisan/commands/utils/files.py	/^def addAtEnd(file_path, string):$/;"	kind:function	line:28
+addModule	godotisan/commands/utils/config.py	/^    def addModule(self, module):$/;"	kind:member	line:57
+author	setup.py	/^    author = 'Javier López Úbeda',$/;"	kind:variable	line:38
+author_email	setup.py	/^    author_email = 'jlopezcur@gmail.com',$/;"	kind:variable	line:39
+base.py	godotisan/commands/base.py	1;"	kind:file	line:1
+build	godotisan/commands/utils/gradle.py	/^    def build(self):$/;"	kind:member	line:17
+build.py	godotisan/commands/build.py	1;"	kind:file	line:1
+buildAndroidDebug	godotisan/commands/utils/scons.py	/^    def buildAndroidDebug(self):$/;"	kind:member	line:24
+buildAndroidRelease	godotisan/commands/utils/scons.py	/^    def buildAndroidRelease(self):$/;"	kind:member	line:31
+buildGodot	godotisan/commands/utils/scons.py	/^    def buildGodot(self):$/;"	kind:member	line:18
+check.py	godotisan/commands/check.py	1;"	kind:file	line:1
+checkGradle	godotisan/commands/check.py	/^    def checkGradle(self):$/;"	kind:member	line:30
+checkJava	godotisan/commands/check.py	/^    def checkJava(self):$/;"	kind:member	line:43
+checkScons	godotisan/commands/check.py	/^    def checkScons(self):$/;"	kind:member	line:18
+classifiers	setup.py	/^    classifiers = [$/;"	kind:variable	line:41
+clean	godotisan/commands/utils/gradle.py	/^    def clean(self):$/;"	kind:member	line:25
+cleanAndroidDebug	godotisan/commands/utils/scons.py	/^    def cleanAndroidDebug(self):$/;"	kind:member	line:46
+cleanAndroidRelease	godotisan/commands/utils/scons.py	/^    def cleanAndroidRelease(self):$/;"	kind:member	line:52
+cleanGodot	godotisan/commands/utils/scons.py	/^    def cleanGodot(self):$/;"	kind:member	line:40
+cli.py	godotisan/cli.py	1;"	kind:file	line:1
+cloneGodot	godotisan/commands/utils/github.py	/^    def cloneGodot(self, name):$/;"	kind:member	line:22
+cloneModule	godotisan/commands/utils/github.py	/^    def cloneModule(self, modulesDir, module):$/;"	kind:member	line:15
+cmdclass	setup.py	/^    cmdclass = {'test': RunTests},$/;"	kind:variable	line:66
+config.py	godotisan/commands/utils/config.py	1;"	kind:file	line:1
+copyAnything	godotisan/commands/utils/files.py	/^def copyAnything(src, dst):$/;"	kind:function	line:20
+create	godotisan/commands/utils/config.py	/^    def create(self, name):$/;"	kind:member	line:17
+create.py	godotisan/commands/create.py	1;"	kind:file	line:1
+createDirectories	godotisan/commands/create.py	/^    def createDirectories(self):$/;"	kind:member	line:19
+data	godotisan/commands/utils/config.py	/^    data = {}$/;"	kind:variable	line:9
+description	setup.py	/^    description = 'A command line interface for templates compilation and modules management.',$/;"	kind:variable	line:35
+description	setup.py	/^    description = 'run tests'$/;"	kind:variable	line:18
+doAction	godotisan/commands/utils/actions.py	/^    def doAction(self, action):$/;"	kind:member	line:17
+doActions	godotisan/commands/utils/actions.py	/^    def doActions(self, actions):$/;"	kind:member	line:13
+entry_points	setup.py	/^    entry_points = {$/;"	kind:variable	line:61
+extras_require	setup.py	/^    extras_require = {$/;"	kind:variable	line:58
+fileHasString	godotisan/commands/utils/files.py	/^def fileHasString(file_path, string):$/;"	kind:function	line:43
+files.py	godotisan/commands/utils/files.py	1;"	kind:file	line:1
+finalize_options	setup.py	/^    def finalize_options(self):$/;"	kind:member	line:24
+get	godotisan/commands/utils/library.py	/^    def get(self, moduleName):$/;"	kind:member	line:21
+getActions	godotisan/commands/utils/config.py	/^    def getActions(self, name):$/;"	kind:member	line:38
+getModule	godotisan/commands/utils/config.py	/^    def getModule(self, moduleName):$/;"	kind:member	line:48
+getModules	godotisan/commands/utils/config.py	/^    def getModules(self):$/;"	kind:member	line:44
+github.py	godotisan/commands/utils/github.py	1;"	kind:file	line:1
+gradle.py	godotisan/commands/utils/gradle.py	1;"	kind:file	line:1
+has	godotisan/commands/utils/library.py	/^    def has(self, moduleName):$/;"	kind:member	line:17
+hasModule	godotisan/commands/utils/config.py	/^    def hasModule(self, moduleName):$/;"	kind:member	line:53
+initialize_options	setup.py	/^    def initialize_options(self):$/;"	kind:member	line:21
+install	godotisan/commands/module.py	/^    def install(self, module):$/;"	kind:member	line:47
+install_requires	setup.py	/^    install_requires = ['docopt', 'gitpython'],$/;"	kind:variable	line:57
+isFirebase	godotisan/commands/utils/config.py	/^    def isFirebase(self):$/;"	kind:member	line:32
+json	godotisan/commands/utils/library.py	/^    json = []$/;"	kind:variable	line:9
+keywords	setup.py	/^    keywords = 'godotisan',$/;"	kind:variable	line:55
+library.py	godotisan/commands/utils/library.py	1;"	kind:file	line:1
+license	setup.py	/^    license = 'MIT',$/;"	kind:variable	line:40
+long_description	setup.py	/^    long_description = file.read()$/;"	kind:variable	line:14
+long_description	setup.py	/^    long_description = long_description,$/;"	kind:variable	line:36
+madule.py	godotisan/modules/madule.py	1;"	kind:file	line:1
+main	godotisan/cli.py	/^def main():$/;"	kind:function	line:42
+module.py	godotisan/commands/module.py	1;"	kind:file	line:1
+modules.py	godotisan/commands/utils/modules.py	1;"	kind:file	line:1
+name	setup.py	/^    name = 'godotisan',$/;"	kind:variable	line:33
+packages	setup.py	/^    packages = find_packages(exclude=['docs', 'tests*']),$/;"	kind:variable	line:56
+readFromTemplate	godotisan/commands/utils/config.py	/^    def readFromTemplate(self):$/;"	kind:member	line:22
+reinstall	godotisan/commands/module.py	/^    def reinstall(self, module):$/;"	kind:member	line:60
+remove	godotisan/commands/module.py	/^    def remove(self, module):$/;"	kind:member	line:76
+removeFolder	godotisan/commands/utils/files.py	/^def removeFolder(folder):$/;"	kind:function	line:40
+removeModule	godotisan/commands/utils/config.py	/^    def removeModule(self, module):$/;"	kind:member	line:61
+replace	godotisan/commands/utils/files.py	/^def replace(file_path, pattern, subst):$/;"	kind:function	line:7
+replaceFile	godotisan/commands/utils/files.py	/^def replaceFile(file_path, subst):$/;"	kind:function	line:33
+run	godotisan/commands/base.py	/^    def run(self):$/;"	kind:member	line:19
+run	godotisan/commands/build.py	/^    def run(self):$/;"	kind:member	line:18
+run	godotisan/commands/check.py	/^    def run(self):$/;"	kind:member	line:13
+run	godotisan/commands/create.py	/^    def run(self):$/;"	kind:member	line:9
+run	godotisan/commands/module.py	/^    def run(self):$/;"	kind:member	line:10
+run	setup.py	/^    def run(self):$/;"	kind:member	line:27
+save	godotisan/commands/utils/config.py	/^    def save(self, data):$/;"	kind:member	line:28
+scons.py	godotisan/commands/utils/scons.py	1;"	kind:file	line:1
+setup.py	setup.py	1;"	kind:file	line:1
+this_dir	setup.py	/^this_dir = abspath(dirname(__file__))$/;"	kind:variable	line:12
+uninstall	godotisan/commands/module.py	/^    def uninstall(self, module):$/;"	kind:member	line:64
+url	setup.py	/^    url = 'https:\/\/github.com\/jlopezcur\/godotisan',$/;"	kind:variable	line:37
+user_options	setup.py	/^    user_options = []$/;"	kind:variable	line:19
+version	setup.py	/^    version = __version__,$/;"	kind:variable	line:34
